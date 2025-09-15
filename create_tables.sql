@@ -1,0 +1,36 @@
+-- Create DB (if not exists)
+CREATE DATABASE IF NOT EXISTS course_api_db CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE course_api_db;
+
+
+-- users table
+CREATE TABLE IF NOT EXISTS users (
+id INT AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(255) NOT NULL,
+email VARCHAR(255) NOT NULL UNIQUE,
+password VARCHAR(255) NOT NULL,
+role ENUM('student','admin') NOT NULL DEFAULT 'student',
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+
+-- courses table
+CREATE TABLE IF NOT EXISTS courses (
+id INT AUTO_INCREMENT PRIMARY KEY,
+title VARCHAR(255) NOT NULL,
+description TEXT,
+price DECIMAL(10,2) DEFAULT 0,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+
+-- enrollments table
+CREATE TABLE IF NOT EXISTS enrollments (
+id INT AUTO_INCREMENT PRIMARY KEY,
+user_id INT NOT NULL,
+course_id INT NOT NULL,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+UNIQUE KEY unique_enrollment (user_id, course_id),
+FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
