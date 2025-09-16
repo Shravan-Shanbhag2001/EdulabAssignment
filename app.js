@@ -1,9 +1,9 @@
 const express = require('express');
 const dotenv2 = require('dotenv');
 dotenv2.config();
-const authRoutes = require('./routes/auth');
+const authRoutes = require('./routes/auth_route');
 const courseRoutes = require('./routes/courses');
-const enrollmentRoutes = require('./routes/enrollments');
+const enrollmentRoutes = require('./routes/enrollment');
 const pool = require('./db');
 
 
